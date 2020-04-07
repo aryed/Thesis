@@ -1,10 +1,10 @@
 %% LyX 2.3.0 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
-\documentclass[leqno,english]{article}
+\documentclass{article}
 \usepackage[T1]{fontenc}
 \usepackage[latin9]{inputenc}
 \usepackage{geometry}
-\geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=2.5cm,rmargin=2.5cm,headheight=1.5cm,headsep=1.5cm,footskip=1.5cm}
+%\geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=2.5cm,rmargin=2.5cm,headheight=1.5cm,headsep=1.5cm,footskip=1.5cm}
 \usepackage{color}
 \usepackage{babel}
 \usepackage{refstyle}
@@ -14,6 +14,9 @@
 \usepackage{amssymb}
 \usepackage{stmaryrd}
 \usepackage{setspace}
+\usepackage{comment}
+\usepackage{mathtools}
+
 \usepackage[unicode=true,pdfusetitle,
  bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
  breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=true]
@@ -83,7 +86,11 @@
 \providecommand{\propositionname}{Proposition}
 \providecommand{\remarkname}{Remark}
 \providecommand{\theoremname}{Theorem}
-
+\newcommand{\FF}{\mathsf{F}}
+\newcommand{\ff}{\mathsf{f}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\cF}{\mathcal{F}}
 \begin{document}
 
 \title{Firefighting on skyscrapers}
@@ -93,86 +100,106 @@
 
 \section{Introduction}
 
-The firefighter problem was introduced by Hartnell and it is based
-on the following one player combinatorial game: let $G=\left(V,E\right)$
-be a graph, and $S\subseteq V$, finite subset of the burning vertices
-at time 1. At every time step $t\in\mathbb{N}$ , the player choose
-$\mathsf{f}\left(t\right)$ non burning vertices and protect them.
-then, at time $t+\frac{1}{3}$ all the unprotected neighbors of the
-fire will lit.
+Let $G=\left(V,E\right)$ be an infinite graph. 
+The firefighter problem is the following combinatorial solitaire game introduced by Hartnell \textcolor{red}{(ADDREF)}: 
+We begin with a finite starting set of \emph{burning} vertices $S\subseteq V$. At every timestep $t\in\mathbb{N}$, the player choose an arbitrary finite collection of $f(t)$ non burning vertices and \emph{protects} them permanently. Then, at time $t+\frac{1}{3}$ all the unprotected neighbors of burning vertices become burning and the process continues ad infinitum. If at some timestep no new burning vertices
+are generated, we say that the player \emph{contained} the fire.
 
-For every $\mathsf{f}:\mathbb{N}\rightarrow\mathbb{N}$, look at the
-family of strategies $\mathcal{F}\left(\mathsf{f}\right)$ such that
-the total number of protected vertices until time $t$ is less or
-equals $\mathsf{f}\left(t\right)$\todo{O: Either "at most" or rounded. Also not consistent with notation later, see remark in the theorem.}. We say that $\mathsf{f}$ \emph{contain} the fire if for all finite $S$ there is a strategy in $\mathcal{F}\left(\mathsf{f}\right)$
-such that the fire is bounded.
+Consider the graphs $\Z\boxempty \Z$ whose vertices consist of the integer two dimensional lattice $Z^2$ with 
+$L_1$ nearest neighbour adjacency and $\Z \boxtimes \Z$ on the same lattice with $L_\infty$ nearest neighbour adjacency.
+In \cite{FH} Hod and the second author, investigated for which $f$ for any starting fire $S$ the player has a strategy that allows him to eventually contain the fire. Here we investigate the same problem on the graphs 
+$G\in\{\Z\boxempty\Z\boxempty[h], \Z\boxtimes\Z\boxtimes[h]\}$, which consist of a slab $\Z\times\Z\times\{1,\dots, h\}$ in $\Z^3$, with the corresponding connectivities.
 
-Let $G$ be a graph, one can ask for optimal $\mathsf{f}$ in some
-sense that depends on the growth of $G$, for example, for $\mathbb{Z}\boxempty\mathbb{Z}$
-any $\mathsf{f}\left(t\right)=ct$ with $\frac{3}{2}<c$ contain the
-fire and $\mathsf{f}=\frac{3}{2}t$ is not enough \cite{key-1}\todo{You mean that for every such f the fire could be contained. f is not a strategy.}\todo{A: We define the term "contain" to be an attribute of a function}. The
-optimal $\mathsf{f}$ is known for a few graphs and there are bounds
-for the limit behavior for a lot of graphs, in particular for Cayley
-graph with polynomial and intermediate growth \cite{key-3}.
 
-This paper generalize the Cartesian result by proving that $\frac{3}{2}ht$
-is the right function for containment in $G=\mathbb{Z}\boxempty\mathbb{Z}\boxempty L_{h}$
-.
 
-Let $h\in\mathbb{N}$, denote by $L_{h}$ the segment of length $h$,
-which is the graph with $V=\left[h\right]$ and 
-\[
-E=\left\{ \left(a,b\right)|\left|a-b\right|=1\right\} .
-\]
+For every $\ff:\N\rightarrow\N$, look at the
+family of strategies $\cF\left(\mathsf{f}\right)$ such that at step $t$ the player protect at most $\mathsf{f}\left(f\right)$ vertices\todo{O: Either "at most" or rounded. Also not consistent with notation later, see remark in the theorem.}. We say that $\mathsf{f}$ \emph{contains} the fire if for all finite $S$ there is a strategy in $\mathcal{F}\left(\mathsf{f}\right)$
+such that the fire is bounded (note here that $\boxempty$  and $\boxtimes$ are the Cartesian product,  and  the strong Cartesian product of graphs, respectively).
 
-For two graphs $G,H$ denote by $G\boxempty H$ the Cartesian product of $G,H$ and denote by $G\boxtimes H$ the strong Cartesian product of $G,H$.
+%Let $G$ be a graph, one can ask for optimal $\mathsf{f}$ in some
+%sense that depends on the growth of $G$, for example, for $\Z\boxempty\Z$
+%any $\mathsf{f}\left(t\right)\equiv c$ with $\frac{3}{2}<c$ contains the
+%fire and $\mathsf{f}\equiv\frac{3}{2}$ is not enough \cite{key-1}\todo{You mean that for every such f the fire could be contained. f is not a strategy.}\todo{A: We define the term "contain" to be an attribute of a function}. The optimal $\mathsf{f}$ is known for a few graphs and there are bounds
+%for the limit behavior for a lot of graphs, in particular for Cayley
+%graph with polynomial and intermediate growth \cite{key-3}.
+
+%This paper generalize the Cartesian result by proving that $\mathsf{f}\equiv\frac{3}{2}h$
+%is the right function for containment in $G=\mathbb{Z}\boxempty\mathbb{Z}\boxempty L_{h}$.
+
+%Let $h\in\mathbb{N}$, denote by $L_{h}$ the segment of length $h$,
+%which is the graph with $V=\left[h\right]$ and 
+%\[
+%E=\left\{ \left(a,b\right)|\left|a-b\right|=1\right\} .
+%\]
+
+
 \begin{thm}
 \label{thm:1}For every $h\in\mathbb{N}$, let $G_{h}=\mathbb{Z}\boxempty\mathbb{Z}\times L_{h}$.
-Let $\frac{3}{2}<c$ then $\mathsf{f}\left(t\right)=cht$ contain
-the fire, and $\mathsf{f}=\frac{3}{2}ht$ are not enough.
+Let $\frac{3}{2}<c$ then $\mathsf{f}\left(t\right)\equiv ch$ contains
+the fire, and $\mathsf{f}\equiv\frac{3}{2}h$ are not enough.
 \end{thm}
 
 \begin{thm}
 \label{cor:2}For every $h\in\mathbb{N}$, let $G_{h}=\mathbb{Z}\boxtimes\mathbb{Z}\times L_{h}$.
-Let $3<c$ then $\mathsf{f}\left(t\right)=cht$ contain the fire,
-and $\mathsf{f}=3ht$ are not enough.
+Let $3<c$ then $\mathsf{f}\left(t\right)\equiv ch$ contains the fire,
+and $\mathsf{f}\equiv 3h$ are not enough.
 \end{thm}
-
+\textcolor{red}{remarks about stronger results that we obtain or could obtain.}
+\subsection{Background}
+\subsection{Discussion and open problems}
+\subsection{Proof outline + outline of the paper}
 
 \section{Preliminaries}
 
-Due to time ambiguity in the firefighter problem description, we
-define the time line of the game:
+To make the description of the problem exact, we
+define the timeline of the game:
 \begin{center}
-\begin{tabular}{|c|c|}
+\begin{tabular}{|c|c|c|}
 \hline 
-time & event\tabularnewline
+time & event & updated quantity\tabularnewline
 \hline 
 \hline 
-0 & The grid created\tabularnewline
+$-\frac{1}{3}$ & The initial fire created & $B(0)$ is set\tabularnewline
 \hline 
-$\frac{1}{3}$ & The initial fire created \tabularnewline
+$t+\frac{1}{3}$ & Protected vertices are selected & $F(1)\setminus B(0)$ are protected\tabularnewline
 \hline 
-$n-\frac{1}{3}$ & Protected vertices are selected\tabularnewline
+$t+\frac{2}{3}$ & fire spreads to unprotected adjacent vertices& $B(t+1)$ is determined\tabularnewline
 \hline 
-$n$ & Nothing\tabularnewline
-\hline 
-$n+\frac{1}{3}$ & The fire spreads to adjacent vertices\tabularnewline
+$t$ & Nothing &\tabularnewline
 \hline 
 \end{tabular}
 \par\end{center}
 
-Most of the arguments will be local and patched together. We begin
-by setting up the infrastructure for a local system.
+Denote the four axis aligned directions by $e_{0}=\left(0,1\right)=-e_{2},e_{1}=\left(1,0\right)=-e_{3}$.
+Call the sub-lattice $\Z^2\times\{k\}$ the $k$-th \emph{level} of our graph. 
+Throughout, we follow the convention that level is given in the superscript and direction is given in the subscript.
+Addition in subscript indices is always taken modulo 4.
+Denote the graph distance between vertices $v,u$ by $d(v,u)$ and write $S^+=\{v\ :\ d(v,S)\le 1\}$.
 
-The four axis aligned directions, denoted by $e_{0}=\left(0,1\right)=-e_{2},e_{1}=\left(1,0\right)=-e_{3}$.
+Given $\FF\left(t\right), B(0) \subseteq\mathbb{Z}^{2}\times\left[h\right]$ we inductively define $B_{\FF}(t)=B\left(t\right),\FF\left(t\right)$ for $t\in\N$ by
+$$B(t)=B(t-1)\cup \left(B(t-1)^+\setminus \FF(t)\right).$$
+Observe that here we allow $\FF(t)$ to overlap with $B(t-1)$, however, such overlapping elements have no effect on the evolution of $B(t)$. 
+The reader may think of $\FF(t)$ as the orders of the player concerning which vertices to protect, so that illegal orders are simply ignored.
+$B(t)$ describes the evolution of the burning vertices so that $B(t)$ are the vertices burning at time $t$
+and $\FF(t)\setminus B(t)$ are the vertices protected just before the fire spread at time $t-\tfrac{1}{3}$. 
 
-Throughout, we follow the convention that addition in subscript indices
-is taken modulo 4.
+\textcolor{red}{Where to put and how to improve:}
+In our proof for the lower bound on the asymptotic rate of protected vertices needed to contain the fire, we are interested only in new burning vertices. This observation led the authors of \cite{FH} to consider only \emph{firefronts} - the burning vertices at time $t$ which are most distant in a certain direction from a point in the starting set of burning vertices. Here we develop this idea further, keeping track of a \emph{fronts structure}, the intersection of $B(t)$ with a certain a sets, chosen so that 
+as long as this set keeps moving away from the origin, the fire is not contained. (two main changes - a. fronts move in a multilayer form, so that sometimes a level moves without having any fire on, b. fronts may sometime not move, even though there is more distant fire in that direction.)
 
-Fix $h\in\mathbb{N}$ and let $G_{h}=\mathbb{Z}\boxtimes\mathbb{Z}\times L_{h}$.
-The vertices of $G_{h}$ are $V:=\mathbb{Z}\times\mathbb{Z}\times\left[h\right]$,
-therefore identify the vertices with $\mathbb{Z}\times\mathbb{Z}\times\left[h\right]\subseteq\mathbb{Z}^{3}$.
+\subsection{the fronts structure}
+
+Call an vector $\{x_k\}_{k\in[h]}\in \N^h$ \emph{Lipschitz} if $|x_{k+1}-x_{k}|  \le 1$ for all $k\in (0,\dots,h-1)$.
+\begin{defn}
+Given $\rho = (r^1_{i},\dots,r^h_{i})_{i\in[4]}$, four Lipschitz vectors, define a
+\emph{fronts structure} of $\rho$ as $(L_0,L_1,L_2,L_3)$
+$$L_i(\rho)=\bigcup_{k\in[h]}\{r^h_i e_i+a e_{i+1}\ :\ a\in \{-r^h_{i-1}+1,\dots,r^h_{i+1}-1\} \},$$
+\todo{verify the sign of a}
+\todo{3D figure of Lipschitz vector - $L_{i}$}
+writing
+$$L^k_i(\rho)=L_i(\rho)\cap (\Z^2\times\{k\}),$$
+\end{defn}
+\begin{comment}
 \begin{defn}
 For all $i\in\left[4\right],k\in\left[h\right]$ define, $r_{i}^{k}\left(t\right)$
 - the \emph{fire range} in the i-th direction and the k-th
@@ -183,8 +210,10 @@ Define
 r_{i,j}^{k}\left(t\right)=\left(e_{i}r_{i}^{k}\left(t\right)+e_{j}r_{j}^{k}\left(t\right)\right)\times\left\{ k\right\} \in V,
 \]
 \end{defn}
+\end{comment}
 
 which is the i-th j-th corner.
+
 
 \begin{defn}
 The i-th \emph{firefront} of the k-th \emph{level} is
@@ -200,19 +229,13 @@ or negative sign).
 \end{defn}
 
 \begin{cor}
-\label{cor:1}The z coordinate give us that $L_{i}^{k}\left(t\right),L_{i}^{\ell}\left(t\right)$
-are disjoint for all $k\ne\ell$.
-
-The x coordinate of points in $L_{1}$ is $r_{1}^{k}\left(t\right)$, the x
-coordinate of $L_{0}$ is strictly less than $r_{1}^{k}\left(t\right)$
-so that $L_{1}^{k}\left(t\right)\cap L_{0}^{k}\left(t\right)=\varnothing$.
-The same holds for all $i\ne j$. 
+\label{cor:1} For every distinct pair $(i,k)\neq (j,\ell)$ we have
+$$ L_{i}^{k}(t)\cap L_{j}^{\ell}(t)= \varnothing $$
 \end{cor}
+\begin{proof}
+Observe that $r_{1}^{k}\left(t\right)$ is greater then the $x$ coordinate of points in $L_{0}^{k}(t)$ and equals the x coordinate of points in  $L_{1}^{k}(t)$, use the same arguments for any disjoint pair $(i,j)$. For disjoint pair of $(k,\ell)$, looking at the $z$  coordinate completes the proof. 
+\end{proof}
 
-\begin{defn}
-Denote by $B\left(t\right),F\left(t\right)\subseteq\mathbb{Z}^{2}\times\left[h\right]$
-the burning vertices and the firefighters at time $t$.
-\end{defn}
 
 The rules of the firefighter problem are:
 \[
@@ -221,9 +244,9 @@ B\left(t+1\right)=B\left(t\right)\cup B\left(t\right)^{+}\setminus F\left(t+1\ri
 
 Useful method is to make a time change to the fire and the firefighters
 and count them in ``frontal time''. To do so, we have the following
-definition. 
+definition.
 \begin{defn}
-The $potential$ is: 
+The $potential$ \todo{A: The "fire volume of the front"? but I think that "frontal fire" are the points, maybe: "The potential of the frontal fire" is: $\varphi$ ... from now on call "the potential". maybe: firocity} is:
 \[
 \varphi_{i}^{k}\left(t\right)=\left|L_{i}^{k}\left(t\right)\cap B\left(t\right)\right|.
 \]
@@ -246,17 +269,22 @@ From now on the paper uses only $f$ and the assumption $\mathsf{f}\left(t\right)
 equivalent to $\left|F\left(t\right)\right|\leq ct$.
 \end{rem*}
 \begin{cor}
-Let $t<t^{\prime}$, by induction: $\mathsf{F}_{i}^{k}\left(t^{\prime}\right)\cap\mathsf{F}_{i}^{k}\left(t\right)=\varnothing$.
-\corref{1} shows the disjointness of $L_{i}^{k}\left(t\right),L_{j}^{\ell}\left(t\right)$
+For all $t\in \mathbb{N}$ we have $$\sum_{i\in \left[4\right]}\sum_{k\in\left[h\right]}\sum_{\tau=1}^{t}f_{i}^{k}\leq\left|F\left(t\right)\right|.$$
+\end{cor}
+\begin{proof}
+Let $t\tau<t$, by induction: $\mathsf{F}_{i}^{k}\left(t\right)\cap\mathsf{F}_{i}^{k}\left(\tau \right)=\varnothing$.
+\corref{1} shows the disjointness of $L_{i}^{k}\left(\tau\right),L_{j}^{\ell}\left(\tau\right)$
 for distinct pairs of $\left(i,j\right),\left(k,\ell\right)$ conclude
 that
 \[
 \sum_{i\in \left[4\right]}\sum_{k\in\left[h\right]}\sum_{\tau=1}^{t}f_{i}^{k}\leq\left|F\left(t\right)\right|.
 \]
-%Arye: maybe writing the i,k summation together, like that:
+\end{proof}
+
+
+%Arye: maybe summing on i,k together, like that:
 %\sum_{i\in \left[4\right],k\in\left[h\right]}\sum_{\tau=1}^{t}f_{i}^{k}\leq\left|F\left(t\right)\right|.
- 
-\end{cor}
+
 
 \begin{notation*}
 Unless mentioned else, this paper uses the following summation notations:
@@ -266,8 +294,7 @@ indices , for example $v_{\left\{ i,j\right\} }^{k}:=v_{i}^{k}+v_{j}^{k}$.
 Summation up to $t$ will be denoted by upper asterisk , for example $f\left(t\right)^{\ast}=\sum_{i\in \left[4\right]}\sum_{k\in\left[h\right]}\sum_{\tau=1}^{t}f_{i}^{k}\left(\tau\right)$ and $\varphi(t)=\sum_{i\in[4]}\sum_{k\in[h]}\varphi_i^k(t)(=\left|\bigcup_{i\in[4],k\in[h]} L_i^k(t)\cap B(t)\right|$)
 \end{notation*}
 
-To obtain some properties of the fire and the distance we need a
-``frontal structure''.
+To obtain some properties of the fire and the distance we need a ''fronts structure''.
 \begin{defn}
 Similar to $r_{i}^{k}\left(t\right)$ , define $\alpha_{i}^{k}\left(t\right)$
 inductively. 
@@ -306,6 +333,33 @@ The difference in the distance denoted by $\Delta r_{i}^{k}\left(t\right):=r_{i}
 equals 1 if the level is spread or pulled, and 0 otherwise.
 \end{defn}
 
+%\begin{comment}
+%%re-writing the introducing of r
+Discussion: let $\{r_i^k(t)\}$ be a vector with the following properties:
+\begin{itemize}
+    \item $\{r_i^k(t)\}$ is a Lipschitz vector
+    \item $a_i^k(t)=1$ implies $r_i^l(t)=1$
+    \item \textcolor{red}{May we include property of being
+    pulled?, we can't allow $r_i^k$ to move if the front is non-active}
+    \item \textcolor{red}{ and we must have  $r_i^k(t)-r_i^k(t+1)\in {0,1}$ otherwise we have some Fogarty's proof problems}
+\end{itemize}
+One way to maintain fronts structure with these properties is by setting the fire-range as following: first $a_i^k(t)=1$ implies $\Delta r_i^k(t)=1$ which guarantee the first property, second if there is $k$ with  $r_i^{k-1}(t)+1=r_i^{k}(t)$ and $a_i^k(t)=1$ then setting $\Delta r_i^{k-1}(t)=1$ (and maybe $\Delta r_i^{k-2}(t)=1$ and so on) will guarantee the second property. Otherwise set $\Delta r_i^k(t)=0$. formally writing: 
+\[
+\Delta r_i^k(t)= \begin{cases*}
+1 & $\exists$ $0\le d$, $r_i^{d+k}(t)=r_i^k(t)+d$, $a_i^{k+d}(t)=1$ \\
+0 & Otherwise
+\end{cases*}
+\]
+\begin{cor}
+Indeed $\{r_i^k(t)\}_{k\in[h]}$ is a Lipschitz vector
+\end{cor}
+\begin{proof}
+By induction, assume $\{r_i^k(t)\}_{k\in[h]}$ is a Lipschitz vector. The non trivial case happen when $r_i^{k}(t)=r_i^{k-1}(t)+1$, $\Delta r_i^k(t)=1$ and $a_i^k(t)=0$, in this case there is $d$ with $r_i^{d+k}(t)=r_i^k(t)+d$ and $a_i^{k+d}(t)=1$, deduce that $r_i^{d+k}(t)=r_i^{k-1}(t)+d+1$, therefore, $d+1$ is a witness to the fact that $\Delta r_i^{k-1}(t)=1$ and $\{r_i^k(t+1)\}_{k\in[h]}$ is a Lipschitz vector.
+\end{proof}
+
+
+%\end{comment}
+
 One of the properties of the frontal structure is presented in the
 following claim.
 \begin{claim}
@@ -341,12 +395,16 @@ to get that
 0\leq r_{i}^{k+1}\left(t+1\right)-r_{i}^{k}\left(t+1\right)\leq1.
 \]
 \end{proof}
+
+\begin{cor}
+
+\end{cor}
 \begin{cor}
 \label{cor:4}$\left|r_{i}^{\ell}\left(t\right)-r_{i}^{k}\left(t\right)\right|\leq\left|k-\ell\right|$,
 moreover if the k-th level is pulled by the $\ell$-th level then
 $r_{i}^{\ell}\left(t\right)-r_{i}^{k}\left(t\right)\geq\left|\ell-k\right|$
 and hence $r_{i}^{m+1}\left(t\right)-r_{i}^{m}\left(t\right)=1$ for
-all $k\leq m<\ell$ conclude that the m-th level is pulled.
+all $k\leq m<\ell$ so that the m-th level is pulled.
 \end{cor}
 
 
@@ -626,8 +684,8 @@ in the i-th front then
 \begin{proof}
 For all $k$, denote $\Phi_{i}^{k}\left(t\right)=L_{i}^{k}\left(t\right)\cap B_{i}^{k}\left(t\right)$
 which are the sets of the the i-th k-th fire. Let k such that the
-k-th level being pulled by the $\ell$-th level (take $\ell$ to be
-minimal) , by \corref{4} we have $r_{i}^{\ell-1}\left(t\right)=r_{i}^{\ell}\left(t\right)-1$
+k-th level being pulled by the $\ell$-th level and take $\ell$ to be minimal. Using \claimautorefname{}
+by \corref{4} we have $r_{i}^{\ell-1}\left(t\right)=r_{i}^{\ell}\left(t\right)-1$
 therefore fire $\Phi_{i}^{\ell}\left(t\right)$ adjacent to $L_{i}^{\ell-1}\left(t+1\right)$
 and therefore
 \[
@@ -694,7 +752,7 @@ s_{i}\left(t\right)=hb_{i}\left(t\right)-a_{i}\left(t\right).
 
 Note that in the symmetric toy model all the levels are spread or
 simultaneously therefore $s_{i}\left(t\right)=0$ for all $t$, using
-\cite{key-1} one can deduce that in this model 
+\cite{FH} one can deduce that in this model 
 \[
 3h\leq hb_{i}\left(t\right)=a_{i}\left(t\right).
 \]
@@ -1099,7 +1157,7 @@ Look at:
 
 One can see that $L_{1}^{k}\left(t\right)=L_{1}^{k}\left(t+1\right)$
 and hence $\Phi_{1}^{k}\left(t\right)\subseteq\Phi_{1}^{k}\left(t+1\right)$
-also $\Phi_{1}^{k}\left(t\right)^{+}\cap L_{0}^{k}\left(t+1\right)=\varnothing$
+also $\Phi_{0}^{k}\left(t\right)^{+}\cap L_{1}^{k}\left(t+1\right)=\varnothing$
 these two gives:
 \[
 a_{1}^{k}\left(t\right)+\varphi_{1}^{k}\left(t\right)=\varphi_{1}^{k}\left(t\right)\leq\varphi_{1}^{k}\left(t+1\right)=\varphi_{1}^{k}\left(t+1\right)+p_{1}^{k}\left(t+1\right)\leq\varphi_{1}^{k}\left(t+1\right)+p_{1}^{k}\left(t+1\right)+f_{1}^{k}\left(t+1\right).
@@ -1466,7 +1524,7 @@ firefighters on the line
 
 \end{tikzpicture}	
 \begin{thebibliography}{1}
-\bibitem{key-1} Ohad N. Feldheim, Rani Hod, 3/2 Firefighters are
+\bibitem{FH} Ohad N. Feldheim, Rani Hod, 3/2 Firefighters are
 not enough.
 
 \bibitem{key-2} P. Fogarty, Catching the fire on grids, M.Sc. Thesis,
